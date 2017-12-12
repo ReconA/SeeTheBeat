@@ -33,6 +33,7 @@ def bing_image_search(search):
 
 
 def get_image(term, file_name):
+
     print('Searching images for: ', term)
 
     if len(subscription_key) == 32:
@@ -47,6 +48,7 @@ def get_image(term, file_name):
             try:
                 tries = False
                 x = random.randint(0, length-1)
+                x = 0
                 url = pic_results[x]['contentUrl']
                 urllib.request.urlretrieve(url, file_name)
             # If a download fails, just try again.
