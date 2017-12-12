@@ -3,23 +3,24 @@ import librosa
 from draw.canvas_tool import *
 from matplotlib import pyplot as plt
 import find_images
+from PIL import Image
 
-if len(sys.argv) != 2:
+if len(sys.argv) != 3:
     print("Invalid arguments.")
     print("Usage: Main.py <song.wav> <lyrics.txt>")
-    #exit()
+    exit()
 
-song = sys.argv[0]
-lyrics = sys.argv[1]
+song = sys.argv[1]
+lyrics = sys.argv[2]
 
-#filename = librosa.util.example_audio_file()
+song = librosa.util.example_audio_file()
 
 y, sr = librosa.load(song)
 
 x_sections = 3
 y_sections = 2
-sections = x_sections * y_sections
-sections = np.array_split(y, sections)
+section_count = x_sections * y_sections
+sections = np.array_split(y, section_count)
 
 # Initialize canvas.
 x_len = 1024
@@ -27,10 +28,11 @@ y_len = 1024
 canvas = np.zeros((x_len, y_len, 3), dtype=np.uint8)
 
 # download images based on lyrics
-image_paths = find_images.find_images(lyrics, nb_imgs=5)
-print(image_paths)
+image_paths = find_images.find_images(lyrics, nb_imgs=section_count)
 
-images = None # TODO: an array of images from lyrics.
+images = list()
+for path in image_paths:
+    images.append(Image.open(path))
 
 nx = 0
 ny = 0

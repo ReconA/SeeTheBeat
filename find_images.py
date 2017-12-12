@@ -96,9 +96,9 @@ def generate(state_transition_probabilities, length=10, start=None):
         #print(pred, cdf)
 
     # Select the start
-    if(start == None):
+    if start == None:
         start = random.choice(list(state_transition_probabilities.keys()))
-    elif(start not in state_transition_probabilities):
+    elif start not in state_transition_probabilities:
         raise ValueError('the \'start\' is not the dictionary')
     
     # init markov_chain 
@@ -205,6 +205,7 @@ def generate2(probs1, probs2, length=10, start=None):
         start = None
     return result
 
+
 def hasNoun(text):
     tokens = nltk.word_tokenize(text)
     tag = nltk.pos_tag(tokens)
@@ -212,6 +213,7 @@ def hasNoun(text):
         if(value == "NN"):
             return True
     return False
+
 
 def hasNNP(text):
     tokens = nltk.word_tokenize(text)
@@ -221,6 +223,7 @@ def hasNNP(text):
             return True
     return False
 
+
 def hasVB(text):
     tokens = nltk.word_tokenize(text)
     tag = nltk.pos_tag(tokens)
@@ -228,6 +231,7 @@ def hasVB(text):
         if(value == "VB"):
             return True
     return False
+
 
 def hasADJP(text):
     tokens = nltk.word_tokenize(text)
@@ -237,6 +241,7 @@ def hasADJP(text):
             return True
     return False
 
+
 def getNounInSentence(text):
     tokens = nltk.word_tokenize(text)
     tag = nltk.pos_tag(tokens)
@@ -244,7 +249,6 @@ def getNounInSentence(text):
         if(value == "NN"):
             return key
     return ""
-
 
 
 def open_file(path):
@@ -262,22 +266,21 @@ def likelihood(text, state_transitions_probabilities={}):
     return generate(state_transitions_probabilities, length=len(state_transitions_probabilities))
 
 
-def get_setences_from_lyrics(lyrics_file, nb_setences=3):
+def get_sentences_from_lyrics(lyrics_file, nb_setences=3):
     lyrics = open_file(lyrics_file)
     probs1 = markov_chain(lyrics, order=1)
 
-    setences = []
+    sentences = []
     for i in range(0, nb_setences):
-        setences.append(generate(probs1, length=3))
+        sentences.append(generate(probs1, length=3))
 
-    return setences
+    return sentences
 
 
 def find_images(lyrics_file, nb_imgs=3):
-    newpath = './'+lyrics_file.split('.')[0]+'/'
-    if not os.path.exists(newpath):
-        os.makedirs(newpath)
-        print('lol')
+    new_path = './'+lyrics_file.split('.')[0]+'/'
+    if not os.path.exists(new_path):
+        os.makedirs(new_path)
 
     lyrics = open_file(lyrics_file)
     probs1 = markov_chain(lyrics, order=1)
@@ -286,17 +289,16 @@ def find_images(lyrics_file, nb_imgs=3):
     timeout = 10000
 
     # generate sentence based on lyrics
-    while((len(sentences) < nb_imgs) or (timeout < 0)):
-
+    while len(sentences) <= nb_imgs or timeout < 0:
         # move to evaluation
-        while(True):
+        while True:
             sentence = generate(probs1, length=3)
-            if((hasNoun(sentence)) and (hasNNP(sentence))):
+            if hasNoun(sentence) and hasNNP(sentence):
                 break
             else:
                 timeout -= 1
 
-        if(sentence not in sentences):
+        if sentence not in sentences:
             sentences.append(sentence)
             timeout = 10000
 
@@ -305,26 +307,13 @@ def find_images(lyrics_file, nb_imgs=3):
     count = 1
     pprint.pprint(sentences)
     for sentence in sentences:
-        bing_api.getImage(sentence, newpath+str(count))
+
+        bing_api.get_image(sentence, new_path + str(count))
         time.sleep(3)
+        paths.append(new_path+str(count))
         count += 1
-        paths.append(newpath+str(count))
 
     return paths
 
 
 #generateRethoricalFigure(noun, N=0.2)
-
-
-
-
-
-
-
-
-
-
-
-
-
-

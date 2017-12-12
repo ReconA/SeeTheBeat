@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import http.client, urllib.parse, json, urllib.request
-import pprint
 import random
 
 
@@ -10,7 +9,7 @@ import random
 # **********************************************
 
 # Replace the subscriptionKey string value with your valid subscription key.
-subscriptionKey = "ba96c1f65c8444bf95c4b7bf974ff94a"
+subscription_key = "ba96c1f65c8444bf95c4b7bf974ff94a"
 
 # Verify the endpoint URI.  At this writing, only one endpoint is used for Bing
 # search APIs.  In the future, regional endpoints may be available.  If you
@@ -20,10 +19,10 @@ host = "api.cognitive.microsoft.com"
 path = "/bing/v7.0/images/search"
 
 
-def BingImageSearch(search):
+def bing_image_search(search):
     "Performs a Bing image search and returns the results."
 
-    headers = {'Ocp-Apim-Subscription-Key': subscriptionKey}
+    headers = {'Ocp-Apim-Subscription-Key': subscription_key}
     conn = http.client.HTTPSConnection(host)
     query = urllib.parse.quote(search)
     conn.request("GET", path + "?q=" + query, headers=headers)
@@ -32,22 +31,28 @@ def BingImageSearch(search):
                    if k.startswith("BingAPIs-") or k.startswith("X-MSEdge-")]
     return headers, response.read().decode("utf8")
 
-def getImage(term, file_name):
+
+def get_image(term, file_name):
     print('Searching images for: ', term)
 
-    if len(subscriptionKey) == 32:
-        headers, result = BingImageSearch(term)
-        #print("\nRelevant HTTP Headers:\n")
-        #print("\n".join(headers))
+    if len(subscription_key) == 32:
+        headers, result = bing_image_search(term)
         dic = json.loads(json.dumps(json.loads(result)))
         pic_results = dic['value']
 
-        # select a 
         length = len(pic_results)
-        x = random.randint(0, length)
-        url = pic_results[x]['contentUrl']
-        urllib.request.urlretrieve(url, file_name)
 
+        tries = 20
+        while tries > 0:
+            try:
+                x = random.randint(0, length-1)
+                url = pic_results[x]['contentUrl']
+                urllib.request.urlretrieve(url, file_name)
+            except urllib.error.HTTPError:
+                print("Failed to fetch an image: HTTPError.")
+            except urllib.error.URLError:
+                print("Failed to fetch an image: URLError.")
+            tries -= 1
     else:
         print("Invalid Bing Search API subscription key!")
         print("Please paste yours into the source code.")
