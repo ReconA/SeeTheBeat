@@ -1,8 +1,6 @@
-import os
 import re
 import nltk
 import pprint
-from operator import itemgetter
 import operator
 import random
 import time
