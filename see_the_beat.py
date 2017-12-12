@@ -14,7 +14,7 @@ song = sys.argv[1]
 lyrics = sys.argv[2]
 
 # download images based on lyrics
-image_paths = find_images.find_images(lyrics, nb_imgs=15)
+image_paths = find_images.find_images(lyrics, nb_imgs=10)
 images = list()
 for path in image_paths:
     images.append(np.array(Image.open(path)))

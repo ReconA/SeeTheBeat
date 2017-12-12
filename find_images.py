@@ -278,6 +278,11 @@ def get_sentences_from_lyrics(lyrics_file, nb_setences=3):
 
 
 def find_images(lyrics_file, nb_imgs=3):
+    """ Download images from bing engine. Query are based on lyrics.
+    :param lyrics_file: path for lyrics file
+    :param nb_imgs: number of images you want to download
+    :return: A list of paths for downloaded images.
+    """
     new_path = './'+lyrics_file.split('.')[0]+'/'
     if not os.path.exists(new_path):
         os.makedirs(new_path)
