@@ -42,19 +42,22 @@ def get_image(term, file_name):
 
         length = len(pic_results)
 
-        tries = 20
-        while tries > 0:
+        tries = False
+        while tries == True:
             try:
+                tries = False
                 x = random.randint(0, length-1)
                 url = pic_results[x]['contentUrl']
                 urllib.request.urlretrieve(url, file_name)
+            # If a download fails, just try again.
             except urllib.error.HTTPError:
-                print("Failed to fetch an image: HTTPError.")
+                tries = True 
             except urllib.error.URLError:
-                print("Failed to fetch an image: URLError.")
+                tries = True 
             except ssl.CertificateError:
-                print("Failed to fetch an image: SSLError")
-            tries -= 1
+                tries = True 
+
+            
     else:
         print("Invalid Bing Search API subscription key!")
         print("Please paste yours into the source code.")

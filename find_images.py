@@ -158,7 +158,7 @@ def generate2(probs1, probs2, length=10, start=None):
         cdfs2[pred] = cdf
 
     result = ""
-    while(hasNoun(result) == False) : 
+    while has_noun(result) == False:
         # Select the start
         if(start == None):
             start = random.choice(list(probs2.keys()))
@@ -170,15 +170,14 @@ def generate2(probs1, probs2, length=10, start=None):
 
         for x in nltk.word_tokenize(start):
             markov_chain.append(x)
-        #pprint.pprint(cdfs1[markov_chain[-1]])
 
         while len(markov_chain) < length:
             pred = (''.join(x+' ' for x in markov_chain[-2:]))[:-1]
             rnd = random.random() # Random number from 0 to 1
             # if the last element has no succ, we stop.
-            if(pred not in cdfs2) :
+            if pred not in cdfs2:
                 last_word = nltk.word_tokenize(pred)[-1]
-                if(last_word not in cdfs1):
+                if last_word not in cdfs1:
                     break
                 else :
                     cdf = cdfs1[pred]
@@ -206,47 +205,47 @@ def generate2(probs1, probs2, length=10, start=None):
     return result
 
 
-def hasNoun(text):
+def has_noun(text):
     tokens = nltk.word_tokenize(text)
     tag = nltk.pos_tag(tokens)
     for key, value in tag :
-        if(value == "NN"):
+        if value == "NN":
             return True
     return False
 
 
-def hasNNP(text):
+def has_nnp(text):
     tokens = nltk.word_tokenize(text)
     tag = nltk.pos_tag(tokens)
     for key, value in tag :
-        if(value == "NNP"):
+        if value == "NNP":
             return True
     return False
 
 
-def hasVB(text):
+def has_vb(text):
     tokens = nltk.word_tokenize(text)
     tag = nltk.pos_tag(tokens)
     for key, value in tag :
-        if(value == "VB"):
+        if value == "VB":
             return True
     return False
 
 
-def hasADJP(text):
+def has_adjp(text):
     tokens = nltk.word_tokenize(text)
     tag = nltk.pos_tag(tokens)
     for key, value in tag :
-        if(value == "ADJP"):
+        if value == "ADJP":
             return True
     return False
 
 
-def getNounInSentence(text):
+def get_noun_in_sentence(text):
     tokens = nltk.word_tokenize(text)
     tag = nltk.pos_tag(tokens)
     for key, value in tag :
-        if(value == "NN"):
+        if value == "NN":
             return key
     return ""
 
@@ -294,11 +293,11 @@ def find_images(lyrics_file, nb_imgs=3):
     timeout = 10000
 
     # generate sentence based on lyrics
-    while len(sentences) <= nb_imgs or timeout < 0:
+    while len(sentences) < nb_imgs and timeout > 0:
         # move to evaluation
         while True:
             sentence = generate(probs1, length=3)
-            if hasNoun(sentence) and hasNNP(sentence):
+            if has_noun(sentence) and has_nnp(sentence):
                 break
             else:
                 timeout -= 1
