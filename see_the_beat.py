@@ -13,6 +13,13 @@ if len(sys.argv) != 3:
 song = sys.argv[1]
 lyrics = sys.argv[2]
 
+# download images based on lyrics
+image_paths = find_images.find_images(lyrics, nb_imgs=15)
+images = list()
+for path in image_paths:
+    images.append(np.array(Image.open(path)))
+
+
 #song = librosa.util.example_audio_file()
 
 y, sr = librosa.load(song)
@@ -27,11 +34,6 @@ x_len = 256
 y_len = 256
 canvas = np.zeros((x_len, y_len, 3), dtype=np.uint8)
 
-# download images based on lyrics
-image_paths = find_images.find_images(lyrics, nb_imgs=section_count)
-images = list()
-for path in image_paths:
-    images.append(np.array(Image.open(path)))
 
 nx = 0
 ny = 0
