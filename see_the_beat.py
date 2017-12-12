@@ -23,16 +23,15 @@ section_count = x_sections * y_sections
 sections = np.array_split(y, section_count)
 
 # Initialize canvas.
-x_len = 1024
-y_len = 1024
+x_len = 256
+y_len = 256
 canvas = np.zeros((x_len, y_len, 3), dtype=np.uint8)
 
 # download images based on lyrics
 image_paths = find_images.find_images(lyrics, nb_imgs=section_count)
-
 images = list()
 for path in image_paths:
-    images.append(Image.open(path))
+    images.append(np.array(Image.open(path)))
 
 nx = 0
 ny = 0
@@ -40,8 +39,8 @@ i = 0
 for section in sections:
 
     # Get a random point inside a section of the canvas
-    x0 = random.randint(math.ceil(nx*x_len/x_sections), math.floor((nx + 1) * x_len/x_sections))
-    y0 = random.randint(math.ceil(ny*y_len/y_sections), math.floor((ny + 1) * y_len/y_sections))
+    x0 = random.randint(math.ceil(nx*x_len/x_sections), math.floor((nx + 1) * x_len/x_sections) - 1)
+    y0 = random.randint(math.ceil(ny*y_len/y_sections), math.floor((ny + 1) * y_len/y_sections) - 1)
 
     # Get the tempo of this section.
     tempo, beat_frames = librosa.beat.beat_track(y=section, sr=sr)
@@ -52,7 +51,10 @@ for section in sections:
     # Draw the image inside the canvas section.
     for y in canvas_section.keys():
         for x in canvas_section.get(y):
-            canvas[y,x] = images[i][y,x]
+            try :
+                canvas[y,x] = images[i][y,x]
+            except IndexError:
+                pass
 
     i += 1
     # Move the possible location of the next section.

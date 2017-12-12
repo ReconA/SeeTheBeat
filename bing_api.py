@@ -2,7 +2,7 @@
 
 import http.client, urllib.parse, json, urllib.request
 import random
-
+import ssl
 
 # **********************************************
 # *** Update or verify the following values. ***
@@ -52,6 +52,8 @@ def get_image(term, file_name):
                 print("Failed to fetch an image: HTTPError.")
             except urllib.error.URLError:
                 print("Failed to fetch an image: URLError.")
+            except ssl.CertificateError:
+                print("Failed to fetch an image: SSLError")
             tries -= 1
     else:
         print("Invalid Bing Search API subscription key!")

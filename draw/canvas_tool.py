@@ -72,7 +72,7 @@ def calculate_force(distance):
     :param distance: Distance at which to calculate the force.
     :return: How large force is at the given distance.
     """
-    return 100/(distance**2)
+    return 20/(distance**2)
 
 
 def push(p, origin):
@@ -98,7 +98,7 @@ def create_canvas_section(canvas, x, y, tempo):
     :param tempo: Tempo of the music.
     :return: A dictionary <int, list()> that contains all coordinates of the canvas_section.
     """
-    r = 100
+    r = 50
     points = points_in_circle(x, y, r)
 
     for t in range(int(tempo)):
@@ -116,10 +116,6 @@ def create_canvas_section(canvas, x, y, tempo):
     fill_color = (0, 100, 0)
 
     filled_coordinates = flood_fill(data, x, y, fill_color)
-
-    #from matplotlib import pyplot as plt
-    #plt.imshow(data, interpolation='nearest')
-    #plt.show()
 
     return filled_coordinates
 
