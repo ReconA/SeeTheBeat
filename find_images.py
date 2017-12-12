@@ -5,6 +5,7 @@ import operator
 import random
 import time
 import os
+import numpy
 
 import bing_api
 
@@ -206,6 +207,10 @@ def generate2(probs1, probs2, length=10, start=None):
 
 
 def has_noun(text):
+    """ Check if there is a noun is the text.
+    :param text: a string
+    :return: True if noun find. False Otherwise
+    """
     tokens = nltk.word_tokenize(text)
     tag = nltk.pos_tag(tokens)
     for key, value in tag :
@@ -215,6 +220,10 @@ def has_noun(text):
 
 
 def has_nnp(text):
+    """ Check if there is a pronoun is the text.
+    :param text: a string
+    :return: True if pronoun find. False Otherwise
+    """
     tokens = nltk.word_tokenize(text)
     tag = nltk.pos_tag(tokens)
     for key, value in tag :
@@ -224,6 +233,10 @@ def has_nnp(text):
 
 
 def has_vb(text):
+    """ Check if there is a verb is the text.
+    :param text: a string
+    :return: True if verb find. False Otherwise
+    """
     tokens = nltk.word_tokenize(text)
     tag = nltk.pos_tag(tokens)
     for key, value in tag :
@@ -233,6 +246,10 @@ def has_vb(text):
 
 
 def has_adjp(text):
+    """ Check if there is an abjectif is the text.
+    :param text: a string
+    :return: True if abjectif find. False Otherwise
+    """
     tokens = nltk.word_tokenize(text)
     tag = nltk.pos_tag(tokens)
     for key, value in tag :
@@ -242,6 +259,10 @@ def has_adjp(text):
 
 
 def get_noun_in_sentence(text):
+    """ Find the first noun into a text.
+    :param text: a string
+    :return: the noun if find inside the text. 
+    """
     tokens = nltk.word_tokenize(text)
     tag = nltk.pos_tag(tokens)
     for key, value in tag :
@@ -251,21 +272,18 @@ def get_noun_in_sentence(text):
 
 
 def open_file(path):
+    """ load a file into python
+    :param text: the path of the file
+    :return: the text of the file. 
+    """
     file_raw = None
     with open(path, 'r', encoding='utf8') as f:
         file_raw = f.read()
         return re.sub(r'\s+', ' ', file_raw)
 
 
-#Exercise 7 - week 1
-# TODO : Change to look for the % of matching between the text and the state_transitions
-def likelihood(text, state_transitions_probabilities={}):
-    new_state = markov_chain(text)
-    state_transitions_probabilities.update(new_state)
-    return generate(state_transitions_probabilities, length=len(state_transitions_probabilities))
-
-
 def get_sentences_from_lyrics(lyrics_file, nb_setences=3):
+
     lyrics = open_file(lyrics_file)
     probs1 = markov_chain(lyrics, order=1)
 

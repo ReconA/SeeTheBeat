@@ -18,7 +18,7 @@ lyrics = sys.argv[2]
 
 y, sr = librosa.load(song)
 
-x_sections = 2
+x_sections = 5
 y_sections = 3
 section_count = x_sections * y_sections
 sections = np.array_split(y, section_count)
@@ -34,10 +34,10 @@ x_len = 256
 y_len = 256
 canvas = np.zeros((x_len, y_len, 3), dtype=np.uint8)
 
-
 nx = 0
 ny = 0
 i = 0
+
 for section in sections:
 
     # Get a random point inside a section of the canvas
