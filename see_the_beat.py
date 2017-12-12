@@ -8,12 +8,12 @@ if len(sys.argv) != 2:
     print("Usage: Main.py <song.wav> <lyrics.txt>")
     #exit()
 
-#song = sys.argv[0]
-#lyrics = sys.argv[1]
+song = sys.argv[0]
+lyrics = sys.argv[1]
 
-filename = librosa.util.example_audio_file()
+#filename = librosa.util.example_audio_file()
 
-y, sr = librosa.load(filename)
+y, sr = librosa.load(song)
 
 x_sections = 3
 y_sections = 2
