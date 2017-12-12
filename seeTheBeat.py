@@ -9,8 +9,7 @@ def generator(lyrics):
 # download images for the lyrics
 def generator_text(lyrics):
 	setences = find_images.get_setences_from_lyrics(lyrics, nb_setences = 5)
-	
-
+	print(find_images.find_images(lyrics, nb_imgs=5))
 
 # draw the shapes on the images 
 def generator_shapes():
@@ -44,6 +43,7 @@ def project():
 
 	lyrics = "pink.txt"
 	generator(lyrics)
+
 
 
 

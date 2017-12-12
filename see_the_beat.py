@@ -2,6 +2,7 @@ import sys
 import librosa
 from draw.canvas_tool import *
 from matplotlib import pyplot as plt
+import find_images
 
 if len(sys.argv) != 2:
     print("Invalid arguments.")
@@ -24,6 +25,10 @@ sections = np.array_split(y, sections)
 x_len = 1024
 y_len = 1024
 canvas = np.zeros((x_len, y_len, 3), dtype=np.uint8)
+
+# download images based on lyrics
+image_paths = find_images.find_images(lyrics, nb_imgs=5)
+print(image_paths)
 
 images = None # TODO: an array of images from lyrics.
 

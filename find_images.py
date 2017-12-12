@@ -4,6 +4,7 @@ import pprint
 import operator
 import random
 import time
+import os
 
 import bing_api
 
@@ -273,6 +274,11 @@ def get_setences_from_lyrics(lyrics_file, nb_setences=3):
 
 
 def find_images(lyrics_file, nb_imgs=3):
+    newpath = './'+lyrics_file.split('.')[0]+'/'
+    if not os.path.exists(newpath):
+        os.makedirs(newpath)
+        print('lol')
+
     lyrics = open_file(lyrics_file)
     probs1 = markov_chain(lyrics, order=1)
 
@@ -294,12 +300,18 @@ def find_images(lyrics_file, nb_imgs=3):
             sentences.append(sentence)
             timeout = 10000
 
+    paths = []
+
     count = 1
     pprint.pprint(sentences)
     for sentence in sentences:
-        bing_api.getImage(sentence, str(count))
+        bing_api.getImage(sentence, newpath+str(count))
         time.sleep(3)
         count += 1
+        paths.append(newpath+str(count))
+
+    return paths
+
 
 #generateRethoricalFigure(noun, N=0.2)
 
