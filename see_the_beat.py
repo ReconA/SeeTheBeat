@@ -13,7 +13,7 @@ if len(sys.argv) != 3:
 song = sys.argv[1]
 lyrics = sys.argv[2]
 
-song = librosa.util.example_audio_file()
+#song = librosa.util.example_audio_file()
 
 y, sr = librosa.load(song)
 

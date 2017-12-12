@@ -1,6 +1,15 @@
 # Main file of the project
 import find_images
 
+
+parameters = {
+	'nb_images' : 5,
+	'nb_shapes' : 5,
+	'nb_setences' : 5,
+	'hasNP' : True,
+	'hasNNP'
+}
+
 # Generators
 def generator(lyrics):
 	generator_text(lyrics)
@@ -8,8 +17,12 @@ def generator(lyrics):
 
 # download images for the lyrics
 def generator_text(lyrics):
-	setences = find_images.get_sentences_from_lyrics(lyrics, nb_setences = 5)
-	print(find_images.find_images(lyrics, nb_imgs=5))
+	while(evaluator_text(setences) == False):
+		setences = find_images.get_setences_from_lyrics(lyrics, nb_setences = 5)
+	
+
+def generator_images(setences):
+	return find_images.find_images(lyrics, nb_imgs=5)
 
 # draw the shapes on the images 
 def generator_shapes():
