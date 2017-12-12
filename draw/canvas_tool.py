@@ -43,12 +43,13 @@ def calculate_distance(p1, p2):
 
 def beat(x0, y0, r, circle_points):
     """
-
-    :param x0:
-    :param y0:
-    :param r:
-    :param circle_points:
-    :return:
+    Make a 'beat' inside the a random point of the circle defined by x0, y0, and r.
+    This beat will push circle points directly away from it. Closer points will be pushed more than further points.
+    :param x0: Circle center x-coordinate.
+    :param y0: Circle center y-coordinate.
+    :param r: Circle radius.
+    :param circle_points: Points that will be moved.
+    :return: A list of points that contains the new positions of circle_points after they have been pushed.
     """
     origin = random_point_in_circle(x0, y0, r)
     new_points = list([push(p, origin) for p in circle_points])
@@ -66,18 +67,37 @@ def beat(x0, y0, r, circle_points):
 
 
 def calculate_force(distance):
+    """
+    Calculate the amount of force at a given distance. The force declines inverse proportionally to distance squared.
+    :param distance: Distance at which to calculate the force.
+    :return: How large force is at the given distance.
+    """
     return 100/(distance**2)
 
 
 def push(p, origin):
+    """
+    Push point p directly away from point origin.
+    :param p: Point that will moved.
+    :param origin: Point from which the push comes.
+    :return: New position of point p.
+    """
     distance = calculate_distance(p, origin)
     force = calculate_force(distance)
     new_position = (p[0]+(p[0] - origin[0])*force, p[1]+(p[1] - origin[1])*force)
     return new_position
 
 
-def get_points_inside(canvas, x, y, tempo):
-
+def create_canvas_section(canvas, x, y, tempo):
+    """
+    Create a canvas section at the given (x,y) coordinates. The section will start as a circle, which will be distorted
+    to an irregular shape depending on the tempo.
+    :param canvas:
+    :param x: Canvas section center x-coordinate.
+    :param y: Canvas section center y-coordinate.
+    :param tempo: Tempo of the music.
+    :return: A dictionary <int, list()> that contains all coordinates of the canvas_section.
+    """
     r = 100
     points = points_in_circle(x, y, r)
 
@@ -95,11 +115,11 @@ def get_points_inside(canvas, x, y, tempo):
 
     fill_color = (0, 100, 0)
 
-    data, filled_coordinates = flood_fill(data, x, y, fill_color)
+    filled_coordinates = flood_fill(data, x, y, fill_color)
 
-    from matplotlib import pyplot as plt
-    plt.imshow(data, interpolation='nearest')
-    plt.show()
+    #from matplotlib import pyplot as plt
+    #plt.imshow(data, interpolation='nearest')
+    #plt.show()
 
     return filled_coordinates
 
@@ -115,9 +135,7 @@ def flood_fill(data, x, y, fill_value):
              filled_coordinates: a <int, list> dictionary of all coordinates that were filled.
     """
     filled_coordinates = {}
-    print("flood fill from ", x, y)
-    x0 = x
-    y0 = y
+
     x_size, y_size,_ = data.shape
     orig_value = copy.deepcopy(data[y, x])
 
@@ -143,5 +161,4 @@ def flood_fill(data, x, y, fill_value):
             if y < (y_size - 1):
                 stack.add((x, y + 1))
 
-    data[y0,x0] = [255, 255, 255]
-    return data, filled_coordinates
+    return filled_coordinates
