@@ -263,36 +263,46 @@ def likelihood(text, state_transitions_probabilities={}):
     return generate(state_transitions_probabilities, length=len(state_transitions_probabilities))
 
 
-NUMB = open_file('numb.txt')
-NOT_AFRAID = open_file('not_afraid.txt')
+def get_setences_from_lyrics(lyrics_file, nb_setences=3):
+    lyrics = open_file(lyrics_file)
+    probs1 = markov_chain(lyrics, order=1)
 
-probs1 = markov_chain(NUMB, order=1)
+    setences = []
+    for i in range(0, nb_setences):
+        setences.append(generate(probs1, length=3))
 
-
-#noun = getNounInSentence(sentence)
-
-sentences = []
-
-# generate sentence based on lyrics
-while(len(sentences)<4):
-
-    while(True):
-        sentence = generate(probs1, length=5)
-        if((hasNoun(sentence)) and (hasNNP(sentence))):
-            break
-    if(sentence not in sentences):
-        sentences.append(sentence)
-
-count = 1
-pprint.pprint(sentences)
-for sentence in sentences:
-    bing_api.getImage(sentence, str(count))
-    time.sleep(1)
-    count = count + 1
+    return setences
 
 
-#noun = 'snow'
-#print( 'NOUN :', noun)
+def find_images(lyrics_file, nb_imgs=3):
+    lyrics = open_file(lyrics_file)
+    probs1 = markov_chain(lyrics, order=1)
+
+    sentences = []
+    timeout = 10000
+
+    # generate sentence based on lyrics
+    while((len(sentences) < nb_imgs) or (timeout < 0)):
+
+        # move to evaluation
+        while(True):
+            sentence = generate(probs1, length=3)
+            if((hasNoun(sentence)) and (hasNNP(sentence))):
+                break
+            else:
+                timeout -= 1
+
+        if(sentence not in sentences):
+            sentences.append(sentence)
+            timeout = 10000
+
+    count = 1
+    pprint.pprint(sentences)
+    for sentence in sentences:
+        bing_api.getImage(sentence, str(count))
+        time.sleep(3)
+        count += 1
+
 #generateRethoricalFigure(noun, N=0.2)
 
 

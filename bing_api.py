@@ -2,6 +2,7 @@
 
 import http.client, urllib.parse, json, urllib.request
 import pprint
+import random
 
 
 # **********************************************
@@ -40,9 +41,12 @@ def getImage(term, file_name):
         #print("\n".join(headers))
         dic = json.loads(json.dumps(json.loads(result)))
         pic_results = dic['value']
-        for pic in pic_results[:1] : 
-            url = pic['contentUrl']
-            urllib.request.urlretrieve(url, file_name)
+
+        # select a 
+        length = len(pic_results)
+        x = random.randint(0, length)
+        url = pic_results[x]['contentUrl']
+        urllib.request.urlretrieve(url, file_name)
 
     else:
         print("Invalid Bing Search API subscription key!")
