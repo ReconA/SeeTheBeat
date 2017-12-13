@@ -49,6 +49,7 @@ On the other hand, the system analyzes the audio and starts to draw shape on the
  
  Atte : 30 hours total.
 	Drawing Tools, Evaluator, See the Beat main structure
+	
  Nicolas 20 hours total
  	Search Image Tools, Text extraction tools, documentation & presentation
  
