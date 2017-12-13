@@ -6,6 +6,7 @@ import find_images
 from draw.background_tool import *
 from PIL import Image
 import evaluate.evaluator as eva
+import scipy.misc
 
 if len(sys.argv) != 4:
     print("Invalid arguments.")
@@ -19,7 +20,8 @@ song_name = sys.argv[3]
 y, sr = librosa.load(song)
 
 x_sections = 3
-y_sections = 2
+y_sections = 3
+
 section_count = x_sections * y_sections
 sections = np.array_split(y, section_count)
 
@@ -42,6 +44,9 @@ nx = 0
 ny = 0
 i = 0
 
+# A set of all pixels used to draw non-background images.
+used_pixels = set()
+
 # Draw an image on each section
 for section in sections:
     # Get a random point inside a section of the canvas
@@ -59,6 +64,7 @@ for section in sections:
             try :
                 # If we have fewer images than expected, reuse them from start.
                 canvas[y,x] = images[i % len(images)][y,x]
+                used_pixels.add((y,x))
             except IndexError:
                 pass
 
@@ -70,8 +76,16 @@ for section in sections:
         ny += 1
 
 
-eva.evaluate(canvas, lyrics)
+# Evaluate the image
+eva.evaluate(canvas, lyrics, used_pixels)
+
+# Save the image.
+scipy.misc.imsave('outfile.jpg', canvas)
+
+# Show image
 plt.imshow(canvas, interpolation='nearest')
 plt.imshow(canvas, interpolation='nearest')
 
 plt.show()
+
+
