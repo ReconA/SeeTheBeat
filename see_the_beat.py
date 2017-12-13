@@ -63,9 +63,11 @@ for section in sections:
         for x in canvas_section.get(y):
             try :
                 # If we have fewer images than expected, reuse them from start.
-                canvas[y,x] = images[i % len(images)][y,x]
+                canvas[y,x] = images[i % len(images)][y, x]
                 used_pixels.add((y,x))
             except IndexError:
+                pass
+            except ValueError:
                 pass
 
     i += 1
