@@ -5,6 +5,7 @@ from matplotlib import pyplot as plt
 import find_images
 from draw.background_tool import *
 from PIL import Image
+import evaluate.evaluator as eva
 
 if len(sys.argv) != 4:
     print("Invalid arguments.")
@@ -17,8 +18,8 @@ song_name = sys.argv[3]
 
 y, sr = librosa.load(song)
 
-x_sections = 4
-y_sections = 3
+x_sections = 1
+y_sections = 1
 section_count = x_sections * y_sections
 sections = np.array_split(y, section_count)
 
@@ -69,5 +70,6 @@ for section in sections:
         ny += 1
 
 
+eva.evaluate(canvas, lyrics)
 plt.imshow(canvas, interpolation='nearest')
 plt.show()
