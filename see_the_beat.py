@@ -3,27 +3,27 @@ import librosa
 from draw.canvas_tool import *
 from matplotlib import pyplot as plt
 import find_images
+from draw.background_tool import *
 from PIL import Image
+import evaluate.evaluator as eva
 
-if len(sys.argv) != 3:
+if len(sys.argv) != 4:
     print("Invalid arguments.")
-    print("Usage: see_the_beat.py <song.wav> <lyrics.txt>")
+    print("Usage: see_the_beat.py <song> <lyrics.txt> <song_name>")
     exit()
 
 song = sys.argv[1]
 lyrics = sys.argv[2]
-
-
-#song = librosa.util.example_audio_file()
+song_name = sys.argv[3]
 
 y, sr = librosa.load(song)
 
-x_sections = 5
-y_sections = 3
+x_sections = 1
+y_sections = 1
 section_count = x_sections * y_sections
 sections = np.array_split(y, section_count)
 
-# download images based on lyrics
+# Download images based on lyrics
 image_paths = find_images.find_images(lyrics, nb_imgs=section_count)
 images = list()
 for path in image_paths:
@@ -34,17 +34,20 @@ x_len = 256
 y_len = 256
 canvas = np.zeros((x_len, y_len, 3), dtype=np.uint8)
 
+# Draw the background image on canvas
+draw_background(canvas, song_name)
+
+# Variables for drawing inside sections of canvas.
 nx = 0
 ny = 0
 i = 0
 
+# Draw an image on each section
 for section in sections:
-
     # Get a random point inside a section of the canvas
     x0 = random.randint(math.ceil(nx*x_len/x_sections), math.floor((nx + 1) * x_len/x_sections) - 1)
     y0 = random.randint(math.ceil(ny*y_len/y_sections), math.floor((ny + 1) * y_len/y_sections) - 1)
 
-    print(x0, y0)
     # Get the tempo of this section.
     tempo, beat_frames = librosa.beat.beat_track(y=section, sr=sr)
     # Get points inside a canvas to draw to.
@@ -67,5 +70,6 @@ for section in sections:
         ny += 1
 
 
+eva.evaluate(canvas, lyrics)
 plt.imshow(canvas, interpolation='nearest')
 plt.show()

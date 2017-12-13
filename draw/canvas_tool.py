@@ -36,7 +36,7 @@ def calculate_distance(p1, p2):
     Calculate Euclidean distance between p1 and p2.
     :param p1: Tuple of two floats.
     :param p2: Tuple of two floats.
-    :return: Eucliedean distance between p1 and p2.
+    :return: Euclidean distance between p1 and p2.
     """
     return math.sqrt((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)
 
@@ -98,7 +98,7 @@ def create_canvas_section(canvas, x, y, tempo):
     :param tempo: Tempo of the music.
     :return: A dictionary <int, list()> that contains all coordinates of the canvas_section.
     """
-    r = 50
+    r = 45
     points = points_in_circle(x, y, r)
 
     for t in range(int(tempo)):

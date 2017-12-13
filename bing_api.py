@@ -44,7 +44,7 @@ def get_image(term, file_name):
         length = len(pic_results)
 
         tries = True
-        while tries == True:
+        while tries:
             try:
                 tries = False
                 x = random.randint(0, length-1)
@@ -56,8 +56,7 @@ def get_image(term, file_name):
             except urllib.error.URLError:
                 tries = True 
             except ssl.CertificateError:
-                tries = True 
-
+                tries = True
             
     else:
         print("Invalid Bing Search API subscription key!")
