@@ -29,4 +29,6 @@ The system then download a random picture from the set of picture returned by bi
 
 On the otherhand, the system analyse the audio audio and start to draw shape on the 256x256 canvas image. Those shape will be used to insert part of the downloaded images. 
 
+ ## Modules
+ Sentiment analysis classifier in evaluate/senti_classifier is directly taken from https://github.com/kevincobain2000/sentiment_classifier.
  
