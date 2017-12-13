@@ -18,8 +18,8 @@ song_name = sys.argv[3]
 
 y, sr = librosa.load(song)
 
-x_sections = 1
-y_sections = 1
+x_sections = 3
+y_sections = 2
 section_count = x_sections * y_sections
 sections = np.array_split(y, section_count)
 
@@ -72,4 +72,6 @@ for section in sections:
 
 eva.evaluate(canvas, lyrics)
 plt.imshow(canvas, interpolation='nearest')
+plt.imshow(canvas, interpolation='nearest')
+
 plt.show()

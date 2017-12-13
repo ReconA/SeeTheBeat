@@ -315,7 +315,7 @@ def find_images(lyrics_file, nb_imgs=3):
         # move to evaluation
         while True:
             sentence = generate(probs1, length=3)
-            if has_noun(sentence) and has_nnp(sentence):
+            if has_noun(sentence) or has_nnp(sentence):
                 break
             else:
                 timeout -= 1

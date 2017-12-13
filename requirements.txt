@@ -1,0 +1,3 @@
+ipython
+nltk==3.2.1
+creamas==0.3.0
