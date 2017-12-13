@@ -29,15 +29,19 @@ def get_pos_neg(lyrics):
     return pos_score, neg_score
 
 
-def evaluate(canvas, lyrics):
+def evaluate(image, lyrics, used_pixels):
     """
-    Print an evaluation based on sentiment analysis of lyrics 
-    :param canvas:
-    :param lyrics:
+    Print an evaluation based on sentiment analysis of lyrics, image brightness, and the percentage of used pixels.
+    :param image: The program output image as a numpy array.
+    :param lyrics: The text file that contains the lyrics.
+    :param used_pixels: Map of int 2-tuples that contains coordinates used
     :return:
     """
     pos_score, neg_score = get_pos_neg(open(lyrics))
-    b = brightness(canvas)
+    b = brightness(image)
+    used = len(used_pixels)
+    pixels = len(image)*len(image[0])
 
+    print("%.2f" % (used/pixels))
     print(pos_score, neg_score)
     print(b)
