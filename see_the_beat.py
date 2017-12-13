@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 import find_images
 from draw.background_tool import *
 from PIL import Image
-import evaluate.evaluator as eva
+#import evaluate.evaluator as eva
 import scipy.misc
 
 if len(sys.argv) != 4:
@@ -19,8 +19,9 @@ song_name = sys.argv[3]
 
 y, sr = librosa.load(song)
 
-x_sections = 4
+x_sections = 3
 y_sections = 3
+
 section_count = x_sections * y_sections
 sections = np.array_split(y, section_count)
 
@@ -76,11 +77,13 @@ for section in sections:
 
 
 # Evaluate the image
-eva.evaluate(canvas, lyrics, used_pixels)
+#eva.evaluate(canvas, lyrics, used_pixels)
 
 # Save the image.
 scipy.misc.imsave('outfile.jpg', canvas)
 
 # Show image
 plt.imshow(canvas, interpolation='nearest')
+plt.imshow(canvas, interpolation='nearest')
+
 plt.show()

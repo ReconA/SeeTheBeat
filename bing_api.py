@@ -25,7 +25,7 @@ def bing_image_search(search):
     headers = {'Ocp-Apim-Subscription-Key': subscription_key}
     conn = http.client.HTTPSConnection(host)
     query = urllib.parse.quote(search)
-    conn.request("GET", path + "?q=" + query, headers=headers)
+    conn.request("GET", path + "?q=" + query + "&imageType=photo&licence=Modify", headers=headers)
     response = conn.getresponse()
     headers = [k + ": " + v for (k, v) in response.getheaders()
                    if k.startswith("BingAPIs-") or k.startswith("X-MSEdge-")]
@@ -48,7 +48,6 @@ def get_image(term, file_name):
             try:
                 tries = False
                 x = random.randint(0, length-1)
-                x = 0
                 url = pic_results[x]['contentUrl']
                 urllib.request.urlretrieve(url, file_name)
             # If a download fails, just try again.
