@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 import find_images
 from draw.background_tool import *
 from PIL import Image
-#import evaluate.evaluator as eva
+import evaluate.evaluator as eva
 import scipy.misc
 
 if len(sys.argv) != 4:
@@ -77,7 +77,7 @@ for section in sections:
 
 
 # Evaluate the image
-#eva.evaluate(canvas, lyrics, used_pixels)
+eva.evaluate(canvas, lyrics, used_pixels)
 
 # Save the image.
 scipy.misc.imsave('outfile.jpg', canvas)
