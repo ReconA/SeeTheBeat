@@ -29,7 +29,11 @@ sections = np.array_split(y, section_count)
 image_paths = find_images.find_images(lyrics, nb_imgs=section_count)
 images = list()
 for path in image_paths:
-    images.append(np.array(Image.open(path)))
+    try :
+        images.append(np.array(Image.open(path)))
+    except OSError:
+        # Sometimes the downloaded image is not valid. 
+        pass
 
 # Initialize canvas.
 x_len = 256
