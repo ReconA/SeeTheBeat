@@ -42,3 +42,11 @@ On the other hand, the system analyzes the audio and starts to draw shape on the
  ## Modules
  Sentiment analysis classifier in evaluate/senti_classifier is directly taken from https://github.com/kevincobain2000/sentiment_classifier.
  
+ ## Time management
+ 
+ Atte : 30 hours total.
+	Drawing Tools, Evaluator, See the Beat main structure
+ Nicolas 20 hours total
+ 	Search Image Tools, Text extraction tools, documentation & presentation
+ 
+  
