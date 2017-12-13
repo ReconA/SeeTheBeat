@@ -10,6 +10,9 @@ Course project for Computational Creativity at CS department of University of He
 - ``pip install -r requirements.txt`` (inside the project)
 - install ``librosa`` (follow instruction here : https://librosa.github.io/librosa/install.html)
 - install opencv with ``pip3 install opencv-python`` 
+- install https://github.com/kevincobain2000/sentiment_classifier
+
+The project is tested on Windows 7, python 3.6, OpenCv 3.3.0, Librosa 0.5.1, matplotlib 2.1.0, PIL 4.3.0, nltk 3.2.5, numpy 1.13.3, and sentiment_classifier 0.7.
 
 ## How to use the project
 
