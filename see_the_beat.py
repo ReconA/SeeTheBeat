@@ -84,5 +84,3 @@ scipy.misc.imsave('outfile.jpg', canvas)
 # Show image
 plt.imshow(canvas, interpolation='nearest')
 plt.show()
-
-

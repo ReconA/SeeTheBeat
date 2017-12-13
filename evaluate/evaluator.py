@@ -42,6 +42,7 @@ def evaluate(image, lyrics, used_pixels):
     used = len(used_pixels)
     pixels = len(image)*len(image[0])
 
-    print("%.2f" % (used/pixels))
-    print(pos_score, neg_score)
-    print(b)
+    print("Evaluation:")
+    print("  Used pixels %.2f%%" % (100*used/pixels))
+    print("  Positivity: ", (pos_score - neg_score))
+    print("  Brightness: %.2f" % b)
